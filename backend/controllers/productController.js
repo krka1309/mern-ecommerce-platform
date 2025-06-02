@@ -75,9 +75,32 @@ const getProduct = asyncHandler(async (req, res) => {
 });
 
 const fetchProducts = asyncHandler(async (req, res) => {
-  const keyword = req.query.keyword;
-  console.log(keyword);
-  res.status(200).json({ message: "Hello" });
+  const pageSize = 6;
+  const keyword = req.query.keyword
+    ? { name: { $regex: req.query.keyword, $options: "i" } }
+    : {};
+  const count = await Products.countDocuments({ ...keyword });
+  const products = await Products.find({ ...keyword }).limit(pageSize);
+
+  res.json({
+    products,
+    page: 1,
+    pages: Math.ceil(count / pageSize),
+    hasMore: false,
+  });
+});
+
+const fetchAllProducts = asyncHandler(async (req, res) => {
+  try {
+    const products = await Products.find({})
+      .populate("category")
+      .limit(12)
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.json({ message: "Getting error" });
+  }
 });
 
 module.exports = {
@@ -86,4 +109,5 @@ module.exports = {
   removeProduct,
   getProduct,
   fetchProducts,
+  fetchAllProducts,
 };

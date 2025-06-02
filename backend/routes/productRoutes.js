@@ -11,15 +11,17 @@ const {
   removeProduct,
   getProduct,
   fetchProducts,
+  fetchAllProducts,
 } = require("../controllers/productController");
 
+router.route("/allProducts").get(fetchAllProducts);
 router.route("/").post(authenticate, authoriseAdmin, formidable(), addProduct);
 router
   .route("/:id")
   .put(authenticate, authoriseAdmin, formidable(), updateProduct);
 router.route("/:id").delete(authenticate, authoriseAdmin, removeProduct);
 
-router.route("/:id").get(authenticate, authoriseAdmin, getProduct);
-router.route("/").get(authenticate, authoriseAdmin, fetchProducts);
+router.route("/:id").get(getProduct);
+router.route("/").get(fetchProducts);
 
 module.exports = router;
