@@ -11,6 +11,7 @@ import Profile from "./pages/User/Profile.jsx";
 import AdminRoutes from "./pages/Admin/AdminRoutes.jsx";
 import UserList from "./pages/Admin/UserList.jsx";
 import CategoryList from "./pages/Admin/CategoryList.jsx";
+import ProductsList from "./pages/Admin/ProductsList.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/admin" element={<AdminRoutes />}>
             <Route path="userList" element={<UserList />} />
             <Route path="categories" element={<CategoryList />} />
+            <Route path="productlist" element={<ProductsList />} />
           </Route>
         </Route>
       </Routes>
