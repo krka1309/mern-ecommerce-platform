@@ -12,6 +12,9 @@ import AdminRoutes from "./pages/Admin/AdminRoutes.jsx";
 import UserList from "./pages/Admin/UserList.jsx";
 import CategoryList from "./pages/Admin/CategoryList.jsx";
 import ProductsList from "./pages/Admin/ProductsList.jsx";
+import UpdateProduct from "./pages/Admin/UpdateProduct.jsx";
+import AllProducts from "./pages/Admin/AllProducts.jsx";
+import Home from "./Home.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -23,12 +26,15 @@ createRoot(document.getElementById("root")).render(
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route index={true} path="/" element={<Home />} />
 
           {/* //Admin Routes */}
           <Route path="/admin" element={<AdminRoutes />}>
             <Route path="userList" element={<UserList />} />
             <Route path="categories" element={<CategoryList />} />
             <Route path="productlist" element={<ProductsList />} />
+            <Route path="allproductslist" element={<AllProducts />} />
+            <Route path="update/product/:_id" element={<UpdateProduct />} />
           </Route>
         </Route>
       </Routes>

@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
+  useDeleteProductMutation,
+  useUpdateProductMutation,
   useUploadProductImageMutation,
-  useCreateProductMutation,
+  useGetProductByIdQuery,
+  useGetProductsQuery,
 } from "../../redux/api/productApiSlice";
-import { useNavigate } from "react-router";
-import { useGetCategoryQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
+import { useGetCategoryQuery } from "../../redux/api/categoryApiSlice";
 import AdminMenu from "./AdminMenu";
-// import myImaege from "/uploads/image-1749458363967.webp";
-const ProductsList = () => {
+
+const UpdateProduct = () => {
+  const params = useParams();
+
+  const { data: productData } = useGetProductByIdQuery(params._id);
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [brand, setBrand] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [quantity, setQuantity] = useState(productData?.quantity || "");
+  const [description, setDescription] = useState(
+    productData?.description || ""
+  );
+  const [price, setPrice] = useState(productData?.price || "");
+  const [stock, setStock] = useState(productData?.stock || "");
+  const [image, setImage] = useState(productData?.image || "");
+  const [category, setCategory] = useState(productData?.category || "");
+  const [brand, setBrand] = useState(productData?.brand || "");
+  const [imageUrl, setImageUrl] = useState(productData?.imageUrl || "");
   const navigate = useNavigate();
-  const [uploadProductImage] = useUploadProductImageMutation();
-  const [createProduct] = useCreateProductMutation();
+  console.log("productData", productData, params);
   const { data: categories } = useGetCategoryQuery();
+  const [deleteProduct] = useDeleteProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
+  const [uploadProductImage] = useUploadProductImageMutation();
+
+  useEffect(() => {
+    if (productData && productData._id) {
+      setName(productData.name);
+      setDescription(productData.description);
+      setImage(productData.image);
+      setPrice(productData.price);
+      setCategory(productData.category);
+      setStock(productData.countInStock);
+      setQuantity(productData.quantity);
+      setBrand(productData.brand);
+    }
+  }, [productData]);
+  console.log(productData?.name);
 
   const handleFileUploader = async (e) => {
     const formData = new FormData();
@@ -30,51 +54,56 @@ const ProductsList = () => {
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
-      //   const normalizedPath = res.image.replace(/\\/g, "/");
-      //   setImage(normalizedPath);
-      //   setImageUrl(normalizedPath);
       setImage(res.image);
-      setImageUrl(res.image);
     } catch (error) {
-      toast.error(error?.data?.message || error?.message);
+      toast.error("Server error while updating image");
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const productData = new FormData();
-      productData.append("name", name);
-      productData.append("image", image);
-      productData.append("brand", brand);
-      productData.append("quantity", quantity);
-      productData.append("price", price);
-      productData.append("description", description);
-      productData.append("category", category);
-      productData.append("countInStock", stock);
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("stock", stock);
+    formData.append("qunatity", quantity);
+    formData.append("category", category);
+    formData.append("name", name);
 
-      const { data } = await createProduct(productData);
-      if (data.error) {
-        toast.error(`Server error. Please try again`);
-      } else {
-        toast.success(`${data.name} is created`);
-        navigate("/");
-      }
+    const { data } = await updateProduct({
+      productId: params._id,
+      formData,
+    });
+    console.log("data", data);
+    try {
+      toast.success("Product updated Successfully");
+      navigate("/admin/allproductslist");
     } catch (error) {
-      console.error(error?.data?.message || error?.message);
-      toast.error("Server error please try again");
+      toast.error("Server error while updating product");
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    await deleteProduct(params._id);
+    try {
+      toast.success("Product removed");
+      navigate("/admin/allproductslist");
+    } catch (error) {
+      toast.error("Error! while removing");
+    }
+  };
   return (
     <div className="container xl:mx-[9rem] sm:mx-[0]">
       <AdminMenu />
       <div className="flex flex-col md:flex-row">
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
-          {imageUrl && (
+          <div className="h-12">Update Product</div>
+          {image && (
             <div className="text-center">
               <img
-                src={imageUrl}
+                src={image}
                 alt="product image"
                 className="block mx-auto max-h-[200px]"
               />
@@ -170,12 +199,20 @@ const ProductsList = () => {
                 </select>
               </div>
             </div>
-            <button
-              className="py-4 px-10 bg-pink-500 text-white font-bold text-lg pt-3 border rounded-lg hover:bg-pink-700"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+            <div>
+              <button
+                className="py-4 px-10 bg-green-500 text-white font-bold text-lg pt-3 border rounded-lg hover:bg-green-700 mr-6"
+                onClick={handleSubmit}
+              >
+                Update
+              </button>
+              <button
+                className="py-4 px-10 bg-red-500 text-white font-bold text-lg pt-3 border rounded-lg hover:bg-red-700"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -184,4 +221,4 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+export default UpdateProduct;
