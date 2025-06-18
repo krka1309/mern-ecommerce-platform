@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
+import HeartIcon from "./HeartIcon";
 
 const Product = ({ product }) => {
   return (
@@ -8,9 +9,10 @@ const Product = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-[30rem] rounded"
+          className="w-[30rem] rounded h-[25rem]"
         />
       </div>
+      <HeartIcon product={product} />
       <div className="p-2">
         <Link to={`/product/${product._id}`} className="font-bold text-lg">
           <h2 className="flex justify-between items-center">

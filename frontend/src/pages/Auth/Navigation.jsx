@@ -16,6 +16,7 @@ import {
   useLoginMutation,
   useLogoutMutation,
 } from "../../redux/api/userApiSlice.js";
+import FavouriteCount from "../Products/FavouriteCount.jsx";
 
 const Navigation = () => {
   const [showDropdown, setDropdown] = useState(true);
@@ -80,6 +81,7 @@ const Navigation = () => {
           className="flex items-center transition-transform transform hover:translate-x-2"
         >
           <FaHeart size={26} className="mr-2 mt-[3rem]" />
+          <FavouriteCount />
           <span className="text-white nav-item-name mt-[3rem]">
             Favourite
           </span>{" "}

@@ -1,11 +1,17 @@
 import React from "react";
 import { Link } from "react-router";
+import HeartIcon from "./HeartIcon";
 const SmallProduct = ({ product }) => {
   console.log(product.image);
   return (
-    <div className="w-[20rem] ml-[2rem] p-3">
+    <div className="w-[20rem] ml-[2rem] p-3 ">
       <div className="relative">
-        <img src={product.image} alt={product.name} />
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-[20rem] h-[15rem] object-cover mb-2"
+        />
+        <HeartIcon product={product} />
         <div className="p-54">
           <Link className="" to={`/product/${product._id}`}>
             <h2 className="flex justify-between items-center">

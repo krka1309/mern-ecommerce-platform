@@ -23,9 +23,7 @@ router.route("/new").get(fetchNewProducts);
 router.route("/").get(fetchProducts);
 router.route("/").post(authenticate, authoriseAdmin, formidable(), addProduct);
 
-router
-  .route("/:id/review")
-  .post(authenticate, authoriseAdmin, addProductReview);
+router.route("/:id/review").post(authenticate, addProductReview);
 router
   .route("/:id")
   .put(authenticate, authoriseAdmin, formidable(), updateProduct);

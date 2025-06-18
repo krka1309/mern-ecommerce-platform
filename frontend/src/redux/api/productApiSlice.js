@@ -75,6 +75,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getProductDetails: builder.query({
+      query: (productId) => ({
+        url: `${PRODUCT_URL}/${productId}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -89,4 +96,5 @@ export const {
   useCreateReviewMutation,
   useGetNewProductsQuery,
   useGetTopProductsQuery,
+  useGetProductDetailsQuery,
 } = productApiSlice;
