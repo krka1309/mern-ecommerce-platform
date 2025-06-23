@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router";
 import {
   useCreateReviewMutation,
@@ -19,6 +19,7 @@ import {
 import moment from "moment";
 import Ratings from "./Ratings";
 import ProductTabs from "./ProductTabs";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 const ProductDetails = () => {
   const [qty, setQty] = useState(1);
@@ -36,6 +37,7 @@ const ProductDetails = () => {
 
   //   console.log("product", product);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [createReview, { isLoading: productReviewLoading }] =
     useCreateReviewMutation();
 
@@ -48,6 +50,15 @@ const ProductDetails = () => {
       toast.success(res);
     } catch (error) {
       toast.error(error?.data?.message || error?.message);
+    }
+  };
+  const addToCartHandler = (prod) => {
+    try {
+      dispatch(addToCart({ ...prod, qty }));
+      toast.success("Item Added to cart");
+      navigate("/");
+    } catch (error) {
+      toast.error(error?.data?.message || error?.data);
     }
   };
   return (
@@ -136,6 +147,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="text-[1.2rem] font-bold">
                   <button
+                    onClick={() => addToCartHandler(product)}
                     className="bg-pink-600 cursor-pointer px-4 py-2 rounded-lg"
                     disable={product.countInStock === 0}
                   >

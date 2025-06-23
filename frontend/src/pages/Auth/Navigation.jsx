@@ -25,6 +25,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logoutApiCall] = useLogoutMutation();
+  const { cartItems } = useSelector((state) => state.cart);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -69,13 +70,23 @@ const Navigation = () => {
             Shopping
           </span>{" "}
         </Link>
-        <Link
-          to="/cart"
-          className="flex items-center transition-transform transform hover:translate-x-2"
-        >
-          <AiOutlineShoppingCart size={26} className="mr-2 mt-[3rem]" />
-          <span className="text-white nav-item-name mt-[3rem]">Cart</span>{" "}
-        </Link>
+        <div>
+          <Link
+            to="/cart"
+            className="flex items-center transition-transform transform hover:translate-x-2"
+          >
+            <AiOutlineShoppingCart size={26} className="mr-2 mt-[3rem]" />
+            <span className="text-white nav-item-name mt-[3rem]">
+              Cart
+            </span>{" "}
+            <div className="absolute top-8 left-6">
+              <span className="bg-pink-700 rounded-full px-1 py-0">
+                {cartItems.length}
+              </span>
+            </div>
+          </Link>
+        </div>
+
         <Link
           to="/favourite"
           className="flex items-center transition-transform transform hover:translate-x-2"

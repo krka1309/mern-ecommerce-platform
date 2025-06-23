@@ -14,9 +14,11 @@ import CategoryList from "./pages/Admin/CategoryList.jsx";
 import ProductsList from "./pages/Admin/ProductsList.jsx";
 import UpdateProduct from "./pages/Admin/UpdateProduct.jsx";
 import AllProducts from "./pages/Admin/AllProducts.jsx";
-import Home from "./Home.jsx";
+
 import Favourites from "./pages/Products/Favourites.jsx";
 import ProductDetails from "./pages/Products/ProductDetails.jsx";
+import Home from "./pages/Home.jsx";
+import Cart from "./pages/Cart.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -31,6 +33,7 @@ createRoot(document.getElementById("root")).render(
           <Route index={true} path="/" element={<Home />} />
           <Route path="/favourite" element={<Favourites />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
 
           {/* //Admin Routes */}
           <Route path="/admin" element={<AdminRoutes />}>
