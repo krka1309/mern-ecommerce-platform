@@ -8,6 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const errorHandler = require("./middlewares/asyncHandler");
 const cors = require("cors");
 const PORT = process.env.PORT || 5000;
@@ -30,6 +31,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/order/", orderRoutes);
 
 // Error handler
 app.use(errorHandler);

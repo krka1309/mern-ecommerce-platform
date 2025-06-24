@@ -25,7 +25,7 @@ const Home = () => {
       ) : (
         <>
           <div className="flex justify-between items-center">
-            <h1 className="ml-[20rem] mt-[10rem] text-[3rem]">
+            <h1 className="ml-[10rem] mt-[10rem] text-[3rem]">
               Special Products
             </h1>
             <Link
@@ -39,7 +39,7 @@ const Home = () => {
             <div className="flex justify-between flex-wrap mt-[2rem]">
               {data.products.map((product) => {
                 return (
-                  <div key={product._id}>
+                  <div key={product._id} className="ml-[4rem]">
                     <Product product={product} />
                   </div>
                 );
