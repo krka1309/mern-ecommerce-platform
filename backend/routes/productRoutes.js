@@ -15,6 +15,7 @@ const {
   addProductReview,
   fetchTopProducts,
   fetchNewProducts,
+  filterProducts,
 } = require("../controllers/productController");
 
 router.route("/allProducts").get(fetchAllProducts);
@@ -29,5 +30,6 @@ router
   .put(authenticate, authoriseAdmin, formidable(), updateProduct);
 router.route("/:id").delete(authenticate, authoriseAdmin, removeProduct);
 router.route("/:id").get(getProduct);
+router.route("/filter-products").post(filterProducts);
 
 module.exports = router;

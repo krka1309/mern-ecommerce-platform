@@ -5,6 +5,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import favouriteReducer from "../redux/features/favourites/favouritesSlice";
 import { getProductsFromLocalStorage } from "../Utils/localStorage";
 import cartReducer from "../redux/features/cart/cartSlice";
+import shopReducer from "../redux/features/shop/ShopSlice";
 const favourites = getProductsFromLocalStorage() || [];
 
 const store = configureStore({
@@ -13,6 +14,7 @@ const store = configureStore({
     auth: authReducer,
     favourites: favouriteReducer,
     cart: cartReducer,
+    shop: shopReducer,
   },
   preloadedState: favourites,
   middleware: (getDefaultMiddleware) =>
