@@ -103,7 +103,10 @@ const Profile = () => {
                 Update
               </button>
 
-              <Link className="bg-pink-500 my-[1rem] px-4 py-2 rounded cursor-pointer text-white">
+              <Link
+                className="bg-pink-500 my-[1rem] px-4 py-2 rounded cursor-pointer text-white"
+                to="/user-orders"
+              >
                 {loadingUpdateProfile ? "Updating" : "My Orders"}
               </Link>
             </div>
