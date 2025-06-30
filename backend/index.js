@@ -20,6 +20,9 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
+app.use("/api/config/paypal", (req, res) => {
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
 // ✅ Use path.resolve() to get the project root
 // const __dirname = path.resolve();
 console.log("__dirname", __dirname);
@@ -33,9 +36,6 @@ app.use("/api/product", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/order/", orderRoutes);
 
-app.use("/api/config/paypal", (req, res) => {
-  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
-});
 // Error handler
 app.use(errorHandler);
 

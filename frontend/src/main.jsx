@@ -23,6 +23,7 @@ import Shop from "./pages/shop.jsx";
 import Shipping from "./pages/Orders/Shipping.jsx";
 import PlaceOrder from "./pages/Orders/PlaceOrder.jsx";
 import Order from "./pages/Orders/Order.jsx";
+import UserOrders from "./pages/User/UserOrders.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="/shipping" element={<Shipping />} />
               <Route path="/placeorder" element={<PlaceOrder />} />
               <Route path="/order/:id" element={<Order />} />
+              <Route path="/user-orders" element={<UserOrders />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
