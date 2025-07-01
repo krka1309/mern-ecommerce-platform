@@ -25,6 +25,7 @@ import PlaceOrder from "./pages/Orders/PlaceOrder.jsx";
 import Order from "./pages/Orders/Order.jsx";
 import UserOrders from "./pages/User/UserOrders.jsx";
 import OrderList from "./pages/Admin/OrderList.jsx";
+import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -54,6 +55,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="productlist" element={<ProductsList />} />
               <Route path="allproductslist" element={<AllProducts />} />
               <Route path="orderlist" element={<OrderList />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="update/product/:_id" element={<UpdateProduct />} />
             </Route>
           </Route>
